@@ -3,7 +3,7 @@
 Summary:	Tk HTML / CSS rendering widget
 Name:		tkhtml3
 Version:	3.0
-Release:	%mkrel 0.%{cvs}.3
+Release:	%mkrel 0.%{cvs}.4
 License:	BSD
 Group:		System/Libraries
 URL:		http://tkhtml.tcl.tk/
@@ -73,6 +73,21 @@ pushd build
 cp -R tclsee0.1 %{buildroot}%{tcl_sitearch}
 popd
 
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-hv3.desktop <<EOF
+[Desktop Entry]
+Name=Hv3
+Comment=Very light web browser
+Exec=%{_bindir}/hv3
+Icon=web_browser_section
+Terminal=false
+Type=Application
+StartupNotify=true
+MimeType=foo/bar;foo2/bar2;
+Categories=Network;WebBrowser;
+EOF
+
+
 mkdir -p %{buildroot}%{tcl_sitelib}/hv3
 cp hv/*.tcl %{buildroot}%{tcl_sitelib}/hv3/
 rm %{buildroot}%{tcl_sitelib}/hv3/tst_main.tcl
@@ -96,4 +111,5 @@ rm -rf %{buildroot}
 %files -n hv3
 %{tcl_sitelib}/hv3
 %{_bindir}/hv3
+%{_datadir}/applications/mandriva-hv3.desktop
 
