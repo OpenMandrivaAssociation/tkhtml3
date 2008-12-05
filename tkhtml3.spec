@@ -59,7 +59,8 @@ widget.
 %build
 mkdir build
 pushd build
-export CFLAGS="%{optflags} -fPIC"
+export CFLAGS="$CFLAGS -fPIC"
+export LDFLAGS="$LDFLAGS -fPIC"
 CONFIGURE_TOP=.. %{configure2_5x} --libdir=%{tcl_sitearch}
 %make
 # Build tclsee
