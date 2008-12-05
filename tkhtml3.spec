@@ -12,8 +12,6 @@ Source0:	http://tkhtml.tcl.tk/%{name}-%{cvs}.tar.lzma
 # Disable a whole optional block of code which seems to cause errors
 # - AdamW 2008/12
 Patch0:		tkhtml3-20081201-statesock.patch
-# Use -fPIC when building tclsee (needed on x86-64) - AdamW 2008/12
-Patch1:		tkhtml3-20081201-fpic.patch
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	X11-devel
@@ -59,16 +57,14 @@ widget.
 %prep
 %setup -q -n htmlwidget
 %patch0 -p1 -b .statesock
-%patch1 -p1 -b .fpic
 
 %build
 mkdir build
 pushd build
-export CFLAGS="$CFLAGS -fPIC"
 CONFIGURE_TOP=.. %{configure2_5x} --libdir=%{tcl_sitearch}
 %make
 # Build tclsee
-make -f ../linux-gcc.mk tclsee TOP=../ JSLIB="%{_libdir}/libgc.a %{_libdir}/libsee.a"
+make -f ../linux-gcc.mk tclsee TOP=../ JSLIB="%{_libdir}/libgc.a %{_libdir}/libsee.a" JSFLAGS="$JSFLAGS %{optflags} -fPIC"
 popd
 
 %install
