@@ -78,7 +78,7 @@ make -f ../linux-gcc.mk tclsee TOP=../ JSLIB="%{_libdir}/libgc.a %{_libdir}/libs
 popd
 # Build Polipo
 pushd %{_builddir}/polipo-%{polipo_version}
-%make all
+%make
 popd
 
 %install
