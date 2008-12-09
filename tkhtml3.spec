@@ -1,9 +1,10 @@
-%define cvs	20081201
+%define cvs		20081201
+%define polipo_version	1.0.4
 
 Summary:	Tk HTML / CSS rendering widget
 Name:		tkhtml3
 Version:	3.0
-Release:	%mkrel 0.%{cvs}.4
+Release:	%mkrel 0.%{cvs}.5
 License:	BSD
 Group:		System/Libraries
 URL:		http://tkhtml.tcl.tk/
@@ -11,7 +12,13 @@ URL:		http://tkhtml.tcl.tk/
 Source0:	http://tkhtml.tcl.tk/%{name}-%{cvs}.tar.lzma
 # Disable a whole optional block of code which seems to cause errors
 # - AdamW 2008/12
+# hv3 expects a patched (see hv3_polipo.patch) polipo, named
+# hv3_polipo, to be available in $PATH. Without it, some things -
+# notably ssl support - don't seem to work. - AdamW 2008/12
+Source1:	http://www.pps.jussieu.fr/~jch/software/files/polipo/polipo-%{polipo_version}.tar.gz
 Patch0:		tkhtml3-20081201-statesock.patch
+# Patch for Polipo (see above) - AdamW 2008/12
+Patch1:		hv3_polipo.patch
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	X11-devel
@@ -55,8 +62,11 @@ the Tkhtml3 HTML rendering widget and the tclsee Javascript rendering
 widget.
 
 %prep
-%setup -q -n htmlwidget
+%setup -q -n htmlwidget -b 1
 %patch0 -p1 -b .statesock
+pushd %{_builddir}/polipo-%{polipo_version}
+%patch1 -p1 -b .hv3_polipo
+popd
 
 %build
 mkdir build
@@ -65,6 +75,10 @@ CONFIGURE_TOP=.. %{configure2_5x} --libdir=%{tcl_sitearch}
 %make
 # Build tclsee
 make -f ../linux-gcc.mk tclsee TOP=../ JSLIB="%{_libdir}/libgc.a %{_libdir}/libsee.a" JSFLAGS="$JSFLAGS %{optflags} -fPIC"
+popd
+# Build Polipo
+pushd %{_builddir}/polipo-%{polipo_version}
+%make all
 popd
 
 %install
@@ -96,6 +110,8 @@ echo '#!/bin/sh' > %{buildroot}%{_bindir}/hv3
 echo 'exec wish %{tcl_sitelib}/hv3/hv3_main.tcl "$@"' >> %{buildroot}%{_bindir}/hv3
 chmod 755 %{buildroot}%{_bindir}/hv3
 
+install -m 0755 %{_builddir}/polipo-%{polipo_version}/polipo %{buildroot}%{_bindir}/hv3_polipo
+
 %clean
 rm -rf %{buildroot}
 
@@ -111,5 +127,6 @@ rm -rf %{buildroot}
 %files -n hv3
 %{tcl_sitelib}/hv3
 %{_bindir}/hv3
+%{_bindir}/hv3_polipo
 %{_datadir}/applications/mandriva-hv3.desktop
 
