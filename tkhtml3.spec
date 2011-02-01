@@ -4,7 +4,7 @@
 Summary:	Tk HTML / CSS rendering widget
 Name:		tkhtml3
 Version:	3.0
-Release:	%mkrel 0.%{cvs}.6
+Release:	%mkrel 0.%{cvs}.7
 License:	BSD
 Group:		System/Libraries
 URL:		http://tkhtml.tcl.tk/
@@ -21,7 +21,7 @@ Patch0:		tkhtml3-20081201-statesock.patch
 Patch1:		hv3_polipo.patch
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
-BuildRequires:	X11-devel
+BuildRequires:	libx11-devel
 Requires:	tcl
 Requires:	tk
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -37,7 +37,7 @@ Summary:	Tcl interface to the libsee Javascript engine
 Group:		System/Libraries
 Version:	0.1
 BuildRequires:	see-devel
-BuildRequires:	libgc-static-devel
+BuildRequires:	libgc-devel
 Requires:	tcl
 
 %description -n tclsee
@@ -74,7 +74,7 @@ pushd build
 CONFIGURE_TOP=.. %{configure2_5x} --libdir=%{tcl_sitearch}
 %make
 # Build tclsee
-make -f ../linux-gcc.mk tclsee TOP=../ JSLIB="%{_libdir}/libgc.a %{_libdir}/libsee.a" JSFLAGS="$JSFLAGS %{optflags} -fPIC"
+make -f ../linux-gcc.mk tclsee TOP=.. JSLIB="%{_libdir}/libgc.so %{_libdir}/libsee.so" JSFLAGS="$JSFLAGS %{optflags} -fPIC"
 popd
 # Build Polipo
 pushd %{_builddir}/polipo-%{polipo_version}
@@ -82,6 +82,7 @@ pushd %{_builddir}/polipo-%{polipo_version}
 popd
 
 %install
+rm -fr %buildroot
 pushd build
 %makeinstall_std
 cp -R tclsee0.1 %{buildroot}%{tcl_sitearch}
