@@ -1,0 +1,34 @@
+--- htmlwidget/hv/hv3_http.tcl	2008-02-09 10:14:20.000000000 -0800
++++ htmlwidget/hv/hv3_http.tcl.new	2008-12-01 02:01:47.000000000 -0800
+@@ -612,20 +612,20 @@
+ # First, make sure the http package is actually loaded. Do this by 
+ # invoking ::http::geturl. The call will fail, since the arguments (none)
+ # passed to ::http::geturl are invalid.
+-catch {::http::geturl}
++#catch {::http::geturl}
+ 
+ # Declare a wrapper around ::http::Finish
+-proc ::hv3::HttpFinish {token args} {
+-  upvar 0 $token state
+-  catch {
+-    close $state(sock)
+-    unset state(sock)
+-  }
+-  eval [linsert $args 0 ::http::FinishReal $token]
+-}
++#proc ::hv3::HttpFinish {token args} {
++#  upvar 0 $token state
++#  catch {
++#    close $state(sock)
++#    unset state(sock)
++#  }
++#  eval [linsert $args 0 ::http::FinishReal $token]
++#}
+ 
+ # Install the wrapper.
+-rename ::http::Finish ::http::FinishReal
+-rename ::hv3::HttpFinish ::http::Finish
++#rename ::http::Finish ::http::FinishReal
++#rename ::hv3::HttpFinish ::http::Finish
+ #-----------------------------------------------------------------------
+ 
