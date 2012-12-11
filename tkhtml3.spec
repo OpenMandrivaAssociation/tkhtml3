@@ -131,3 +131,33 @@ rm -rf %{buildroot}
 %{_bindir}/hv3_polipo
 %{_datadir}/applications/mandriva-hv3.desktop
 
+
+
+%changelog
+* Tue Feb 01 2011 Funda Wang <fwang@mandriva.org> 3.0-0.20081201.7mdv2011.0
++ Revision: 634771
+- tighten BR
+
+* Sun Sep 20 2009 Thierry Vignaud <tv@mandriva.org> 3.0-0.20081201.6mdv2010.0
++ Revision: 445487
+- rebuild
+
+* Tue Dec 09 2008 Adam Williamson <awilliamson@mandriva.org> 3.0-0.20081201.5mdv2009.1
++ Revision: 312333
+- just do make, not make all, to build polipo (we don't need the docs)
+- add source for polipo and the patch to turn it into hv3_polipo, build and
+  install hv3_polipo (required for various hv3 functions to work)
+
+* Fri Dec 05 2008 Adam Williamson <awilliamson@mandriva.org> 3.0-0.20081201.4mdv2009.1
++ Revision: 310529
+- add a menu entry
+
+* Fri Dec 05 2008 Adam Williamson <awilliamson@mandriva.org> 3.0-0.20081201.3mdv2009.1
++ Revision: 310471
+- OK, this is REALLY the right way to handle the fpic stuff...grumble
+- ok, i think this is the proper way to get fPIC in here...
+- need fPIC in ldflags too
+- build with -fPIC to fix x86-64 build
+- import tkhtml3
+
+
