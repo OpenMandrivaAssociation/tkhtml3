@@ -7,7 +7,7 @@ Version:	3.0
 Release:	%mkrel 0.%{cvs}.7
 License:	BSD
 Group:		System/Libraries
-URL:		http://tkhtml.tcl.tk/
+URL:		https://tkhtml.tcl.tk/
 # CVS instructions on site
 Source0:	http://tkhtml.tcl.tk/%{name}-%{cvs}.tar.lzma
 # Disable a whole optional block of code which seems to cause errors
