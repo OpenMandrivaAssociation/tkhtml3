@@ -19,6 +19,7 @@ Source1:	http://www.pps.jussieu.fr/~jch/software/files/polipo/polipo-%{polipo_ve
 Patch0:		tkhtml3-20081201-statesock.patch
 # Patch for Polipo (see above) - AdamW 2008/12
 Patch1:		hv3_polipo.patch
+BuildRequires:	make
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	libx11-devel
