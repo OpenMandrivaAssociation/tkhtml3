@@ -4,7 +4,7 @@
 Summary:	Tk HTML / CSS rendering widget
 Name:		tkhtml3
 Version:	3.0
-Release:	%mkrel 0.%{cvs}.7
+Release:	0.%{cvs}.8
 License:	BSD
 Group:		System/Libraries
 URL:		https://tkhtml.tcl.tk/
